@@ -1,0 +1,77 @@
+/*Jack has been assigned a difficult task of creating serial numbers for lottery ticket. A new lottery ticket serial number could be sum of any two existing serial numbers.
+Given a number n and two initial lottery tickets serial number l1 and l2. The task is to determine the maximum count of lottery tickets that can generated and the serial 
+number of the last generated lottery ticket. The serial number of any generated lottery ticket should be smaller than or equal to n
+
+Input Format
+
+The first line contains a number t denoting the number of test cases.
+For each test case the first line contains a integer denoting n The next line contains two integers l1 and l2 denoting the inital lottery ticket serial numbers.
+For example if n = 10 and l1 = 2 and l2 = 3, the lottery numbers would be 2, 3, 5, 7, 8, 9, 10.
+So the output should be 7 10
+
+Constraints
+
+1 <= t <=10
+1 < n <= 100
+1 <= l1, l2 < l1 + l2 <= n
+
+Output Format
+
+For each test case print on a new line the count of lottery ticket and the last generated serial number separated by space.
+
+Sample Input 0
+
+2
+20
+9 11
+50
+12 26
+Sample Output 0
+
+3 20
+4 50*/
+
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    //Followed two lines are to increase the I/O speed.
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin>>t;
+    while(t>0){
+        vector<int> v1;
+        int i1;
+        int i2;
+        int n;
+        cin>>n;
+        cin>>i1>>i2;
+        v1.push_back(i1);
+        v1.push_back(i2);
+        v1.push_back(i1+i2);
+        int size=v1.size();
+        for(int i=2;i<size;i++){
+            for(int j=0;j<i;j++){
+                int ele=v1[i]+v1[j];
+                if(ele<=n){ 
+                    std::vector<int>::iterator it = std::find(v1.begin(), v1.end(), ele);
+                    if (it == v1.end())
+                        v1.push_back(v1[i]+v1[j]);
+                }   
+            }
+            size=v1.size();
+        }
+        int max = *max_element(v1.begin(), v1.end());
+        cout<<v1.size()<<" "<<max;
+        cout<<"\n";
+        t--;
+    }   
+    return 0; 
+}
