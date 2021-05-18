@@ -1,0 +1,85 @@
+/*Given a string s and an integer d. The task is to determine the length of the longest palindromic string p that can be prepared using d distinct characters of string s such that frequency of any character c in string p is at most the frequency of the same character in string s.
+For example if the string s is abcccdffdssab and d = 3, the length of longest palindromic string containing 3 different characters would be 7 (cabcbac). Other combinations are also possible, but none of them would have length greater than 7.
+Note that in the above example, the prepared string consist of only three characters i.e. a, b and c.
+
+Input Format
+
+The first line contains a string s.
+The next line contains a number d
+
+Constraints
+
+1 < length of string <= 105
+
+Output Format
+
+The output will contain a single line denoting the length of longest possible palindromic string. If it is not possible to create one, print -1 instead.
+
+Sample Input 0
+
+abcccdffdssab
+3
+Sample Output 0
+
+7
+Sample Input 1
+
+abbaccddab
+5
+Sample Output 1
+
+-1*/
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    string s;
+    cin>>s;
+    int d;
+    cin>>d;
+    int n = s.size();
+    vector <int> count(26,0);
+    int i;
+    for(i=0;i<n;i++)
+    count[s[i]-'a']++;
+    sort(count.begin(),count.end());
+    reverse(count.begin(),count.end());
+    if(d>26||count[d-1]==0)
+    {
+        cout<<"-1\n";
+    }
+    else
+    {
+        int ans = 0;
+        if(d==1)
+        {
+            cout<<count[0]<<"\n";
+        }
+        else
+        {
+            if(count[d-2]==1)
+            {
+                cout<<"-1\n";
+            }            
+            else
+            {
+                int odd = 0;
+                for(int i=0;i<d;i++)
+                {
+                    if(count[i]%2==1){
+                        odd=1;
+                    }    
+                    int val = count[i]/2;
+                    ans+=val*2;  
+                }
+                if(odd)
+                ans++;
+                cout<<ans<<"\n";
+            }
+        }
+    }
+}
